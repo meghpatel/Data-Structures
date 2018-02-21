@@ -65,9 +65,7 @@ int insert_q(int val)
 	{
 		return -1;
 	}
-	//cout<<"rear before: "<<rear<<endl;
 	q[++rear]=val;
-	//cout<<"rear after: "<<rear<<endl;
 	return 0;
 }
 
@@ -105,18 +103,13 @@ void display(int r)
 		}
 		front=-1;
 		rear=-1;
-	}//Comment
+	}
 	else
 	{
-		//printf("Front is: %d\n",front);
 		for(int i=front;i<rear+1;i++)
 		{
 			printf("%d ",q[i]);
 		}
-		/*for(int i=0;i<10;i++)
-		{
-			printf("%d ",q[i]);
-		}*/
 	}
 	cout<<"\nPress any key to continue to main menu."<<endl;
 	char contl;

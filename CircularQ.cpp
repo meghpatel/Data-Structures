@@ -57,7 +57,7 @@ int main()
 
 int insert_q(int val)
 {
-	if((front==rear+1)||(front==0&&rear=N-1))
+	if((front==rear+1)||(front==0&&rear==N-1))
 	{
 		return -1;
 	}
@@ -82,6 +82,7 @@ int delete_q()
 		return -3;
 	}
 	front++;
+	front=front%N;
 	return 0;
 }
 
@@ -108,13 +109,23 @@ void display(int r)
 	}//Hey 
 	else
 	{
-		for(int i=front;i<N;i++)
+		if(front>rear)
 		{
-			printf("%d ",q[i]);
+			for(int i=0;i<rear+1;i++)
+			{
+				printf("%d ",q[i]);
+			}
+			for(int i=front;i<N;i++)
+			{
+				printf("%d ",q[i]);
+			}
 		}
-		for(int i=0;i<rear+1;i++)
+		else
 		{
-			printf("%d ",q[i]);
+			for(int i=front;i<rear+1;i++)
+			{
+				printf("%d ",q[i]);
+			}
 		}
 		printf("\n");
 	}

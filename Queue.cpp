@@ -4,7 +4,6 @@
 #include<iostream>
 using namespace std;
 
-//declaring the functions
 int insert_q(int);
 int delete_q();
 void display(int);

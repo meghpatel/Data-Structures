@@ -105,7 +105,7 @@ void display(int r)
 		}
 		front=-1;
 		rear=-1;
-	}
+	}//Hey 
 	else
 	{
 		for(int i=front;i<N;i++)

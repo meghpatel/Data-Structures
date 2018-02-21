@@ -9,7 +9,7 @@ int insert_q(int);
 int delete_q();
 void display(int);
 
-int q[10];
+int q[5];
 int front=-1,rear=-1;
 
 int mainmenu()
@@ -43,18 +43,16 @@ int mainmenu()
 		}
 		default:
 		{
-			return -1;
+			cout<<"Enter a proper choice."<<endl;
+			mainmenu();
 		}
 	}
 }
 
 int main()
 {
-	int r = mainmenu();
-	while(r!=0)
-	{
-		r = mainmenu();
-	}
+	mainmenu();
+	return 0;
 }
 
 int insert_q(int val)
@@ -63,7 +61,7 @@ int insert_q(int val)
 	{
 		front++;
 	}
-	if(rear==9)
+	if(rear==4)
 	{
 		return -1;
 	}
@@ -105,7 +103,9 @@ void display(int r)
 		{
 			q[i]=0;
 		}
-	}
+		front=-1;
+		rear=-1;
+	}//Comment
 	else
 	{
 		//printf("Front is: %d\n",front);

@@ -2,13 +2,14 @@
 #include<stdlib.h>
 #include<ctype.h>
 #include<iostream>
+#define N 5	
 using namespace std;
 
 int insert_q(int);
 int delete_q();
 void display(int);
 
-int q[5];
+int q[N];
 int front=-1,rear=-1;
 
 int mainmenu()
@@ -56,15 +57,17 @@ int main()
 
 int insert_q(int val)
 {
+	if((front==rear+1)||(front==0&&rear=N-1))
+	{
+		return -1;
+	}
 	if(rear==-1&&front==-1)
 	{
 		front++;
 	}
-	if(rear==4)
-	{
-		return -1;
-	}
-	q[++rear]=val;
+	rear=rear+1;
+	rear=rear%N;
+	q[rear]=val;
 	return 0;
 }
 
@@ -105,10 +108,15 @@ void display(int r)
 	}
 	else
 	{
-		for(int i=front;i<rear+1;i++)
+		for(int i=front;i<N;i++)
 		{
 			printf("%d ",q[i]);
 		}
+		for(int i=0;i<rear+1;i++)
+		{
+			printf("%d ",q[i]);
+		}
+		printf("\n");
 	}
 	cout<<"\nPress any key to continue to main menu."<<endl;
 	char contl;

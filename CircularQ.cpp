@@ -106,7 +106,7 @@ void display(int r)
 		}
 		front=-1;
 		rear=-1;
-	}//Hey 
+	}//I changed Hey LOL
 	else
 	{
 		if(front>rear)

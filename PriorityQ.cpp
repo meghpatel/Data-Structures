@@ -25,6 +25,12 @@ int mainmenu()
 			cout<<"Enter the number and it's priority: \n"<<endl;
 			int val,r,pri;
 			cin>>val>>pri;
+			pri--;
+			/*if(pri<=0||pri>5)
+			{
+				printf("Enter proper value of priority");
+				mainmenu();
+			}*/
 			r=insert_q(val,pri);
 			display(r);
 			break;
@@ -88,6 +94,17 @@ int delete_q()
 	int ctr=0;
 	for(int i=0;i<5;i++)
 	{
+		if(rear[i]==-1&&front[i]==-1)
+		{
+			ctr++;
+		}
+	}
+	if(ctr==5)
+	{
+		return -3;
+	}
+	for(int i=0;i<5;i++)
+	{
 		if(front[i]==rear[i]&&front[i]!=-1)
 		{
 			front[i]=-1;
@@ -96,7 +113,6 @@ int delete_q()
 		}
 		else if((rear[i]!=-1)&&(front[i]!=-1))
 		{
-			ctr++;
 			front[i]++;
 			front[i]=front[i]%N;
 			break;
@@ -128,6 +144,7 @@ void display(int r)
 		{
 			q[i]=0;
 		}*/
+		printf("UnderFlow/ Queue Empty");
 	}
 	else
 	{

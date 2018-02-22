@@ -10,7 +10,7 @@ int delete_q();
 void display(int);
 
 int q[5][N];
-int front=-1,rear=-1;
+int front[5]={-1,-1,-1,-1,-1},rear[5]={-1,-1,-1,-1,-1};
 
 int mainmenu()
 {
@@ -63,17 +63,18 @@ int insert_q(int val,int pri)
 	}
 	if(rear[pri]==-1&&front[pri]==-1)
 	{
-		front++;
+		front[pri]++;
 	}
 	rear[pri]=rear[pri]+1;
 	rear[pri]=rear[pri]%N;
-	q[rear[pri]]=val;
+	int temp = rear[pri];
+	q[pri][temp]=val;
 	return 0;
 }
 
 int delete_q()
 {
-	if(front[pri]==-1)
+	/*if(front[pri]==-1)
 	{
 		return -2;
 	}
@@ -83,7 +84,27 @@ int delete_q()
 	}
 	front[pri]++;
 	front[pri]=front[pri]%N;
-	return 0;
+	return 0;*/
+	int ctr=0;
+	for(int i=0;i<5;i++)
+	{
+		if(front[i]==rear[i])
+		{
+			front[i]=-1;
+			rear[i]=-1;
+		}
+		if((rear[i]!=-1)&&(front[i]!=-1))
+		{
+			ctr++;
+			front[i]++;
+			front[i]=front[i]%N;
+			return 0;
+		}
+	}
+	if(ctr==0)
+	{
+		return -2;
+	}
 }
 
 void display(int r)
@@ -95,39 +116,41 @@ void display(int r)
 	}
 	else if(r==-2)
 	{
-		cout<<"Queue Underflow"<<endl;
+		//cout<<"Queue Underflow"<<endl;
+		cout<<"Queue is now empty/Underflow"<<endl;
 	}
 	else if(r==-3)
 	{
-		cout<<"Queue is now empty"<<endl;
-		for(int i=0;i<10;i++)
+		//cout<<"Queue is now empty"<<endl;
+		/*for(int i=0;i<10;i++)
 		{
 			q[i]=0;
-		}
-		front=-1;
-		rear=-1;
+		}*/
 	}
 	else
 	{
-		if(front>rear)
+		for(int i=0;i<5;i++)
 		{
-			for(int i=0;i<rear+1;i++)
+			if(front[i]>rear[i])
 			{
-				printf("%d ",q[i]);
+				for(int j=0;j<rear[i]+1;j++)
+				{
+					printf("%d ",q[i][j]);
+				}
+				for(int j=front[i];j<N;j++)
+				{
+					printf("%d ",q[i][j]);
+				}
 			}
-			for(int i=front;i<N;i++)
+			else
 			{
-				printf("%d ",q[i]);
+				for(int j=front[i];j<rear[i]+1;j++)
+				{
+					printf("%d ",q[i][j]);
+				}
 			}
+			printf("\n");
 		}
-		else
-		{
-			for(int i=front;i<rear+1;i++)
-			{
-				printf("%d ",q[i]);
-			}
-		}
-		printf("\n");
 	}
 	cout<<"\nPress any key to continue to main menu."<<endl;
 	char contl;

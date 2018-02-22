@@ -5,11 +5,11 @@
 #define N 5	
 using namespace std;
 
-int insert_q(int);
+int insert_q(int,int);
 int delete_q();
 void display(int);
 
-int q[N];
+int q[5][N];
 int front=-1,rear=-1;
 
 int mainmenu()
@@ -22,10 +22,10 @@ int mainmenu()
 	{
 		case 1:
 		{
-			cout<<"Enter the number to be inserted:"<<endl;
-			int val,r;
-			cin>>val;
-			r=insert_q(val);
+			cout<<"Enter the number and it's priority: "<<endl;
+			int val,r,pri;
+			cin>>val>>pri;
+			r=insert_q(val,pri);
 			display(r);
 			break;
 		}
@@ -55,34 +55,34 @@ int main()
 	return 0;
 }
 
-int insert_q(int val)
+int insert_q(int val,int pri)
 {
-	if((front==rear+1)||(front==0&&rear==N-1))
+	if((front[pri]==rear[pri]+1)||(front[pri]==0&&rear[pri]==N-1))
 	{
 		return -1;
 	}
-	if(rear==-1&&front==-1)
+	if(rear[pri]==-1&&front[pri]==-1)
 	{
 		front++;
 	}
-	rear=rear+1;
-	rear=rear%N;
-	q[rear]=val;
+	rear[pri]=rear[pri]+1;
+	rear[pri]=rear[pri]%N;
+	q[rear[pri]]=val;
 	return 0;
 }
 
 int delete_q()
 {
-	if(front==-1)
+	if(front[pri]==-1)
 	{
 		return -2;
 	}
-	if(front==rear)
+	if(front[pri]==rear[pri])
 	{
 		return -3;
 	}
-	front++;
-	front=front%N;
+	front[pri]++;
+	front[pri]=front[pri]%N;
 	return 0;
 }
 
@@ -129,8 +129,8 @@ void display(int r)
 		}
 		printf("\n");
 	}
-	/*cout<<"\nPress any key to continue to main menu."<<endl;
+	cout<<"\nPress any key to continue to main menu."<<endl;
 	char contl;
-	scanf(" %c",&contl);*/
+	scanf(" %c",&contl);
 	mainmenu();
 }

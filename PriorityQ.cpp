@@ -1,3 +1,7 @@
+/*This is a program for implementing Priority Queues using 
+2D Array. 
+@author: Megh Patel*/
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<ctype.h>

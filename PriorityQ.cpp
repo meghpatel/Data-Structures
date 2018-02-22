@@ -14,7 +14,7 @@ int front[5]={-1,-1,-1,-1,-1},rear[5]={-1,-1,-1,-1,-1};
 
 int mainmenu()
 {
-	//system("cls");
+	system("cls");
 	cout<<"Enter your choice\n1.Insert\n2.Delete\n3.Exit\n"<<endl;
 	int choice;
 	cin>>choice;
@@ -111,7 +111,7 @@ int delete_q()
 
 void display(int r)
 {
-	//system("cls");
+	system("cls");
 	if(r==-1)
 	{
 		cout<<"Queue Overflow"<<endl;
@@ -135,7 +135,7 @@ void display(int r)
 		{
 			if (front[i]==rear[i]&&front[i]==-1)
 			{
-				printf("******\n");
+				printf("******");
 			}
 			else if(front[i]>rear[i])
 			{

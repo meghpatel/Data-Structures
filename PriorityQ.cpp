@@ -15,14 +15,14 @@ int front[5]={-1,-1,-1,-1,-1},rear[5]={-1,-1,-1,-1,-1};
 int mainmenu()
 {
 	//system("cls");
-	cout<<"Enter your choice\n1.Insert\n2.Delete\n3.Exit "<<endl;
+	cout<<"Enter your choice\n1.Insert\n2.Delete\n3.Exit\n"<<endl;
 	int choice;
 	cin>>choice;
 	switch(choice)
 	{
 		case 1:
 		{
-			cout<<"Enter the number and it's priority: "<<endl;
+			cout<<"Enter the number and it's priority: \n"<<endl;
 			int val,r,pri;
 			cin>>val>>pri;
 			r=insert_q(val,pri);
@@ -88,23 +88,25 @@ int delete_q()
 	int ctr=0;
 	for(int i=0;i<5;i++)
 	{
-		if(front[i]==rear[i])
+		if(front[i]==rear[i]&&front[i]!=-1)
 		{
 			front[i]=-1;
 			rear[i]=-1;
+			break;
 		}
-		if((rear[i]!=-1)&&(front[i]!=-1))
+		else if((rear[i]!=-1)&&(front[i]!=-1))
 		{
 			ctr++;
 			front[i]++;
 			front[i]=front[i]%N;
-			return 0;
+			break;
 		}
 	}
-	if(ctr==0)
+	return 0;
+	/*if(ctr==5)
 	{
 		return -2;
-	}
+	}*/
 }
 
 void display(int r)
@@ -131,7 +133,11 @@ void display(int r)
 	{
 		for(int i=0;i<5;i++)
 		{
-			if(front[i]>rear[i])
+			if (front[i]==rear[i]&&front[i]==-1)
+			{
+				printf("******\n");
+			}
+			else if(front[i]>rear[i])
 			{
 				for(int j=0;j<rear[i]+1;j++)
 				{
@@ -151,6 +157,14 @@ void display(int r)
 			}
 			printf("\n");
 		}
+		/*for(int i=0;i<5;i++)
+		{
+			for(int j=0;j<5;j++)
+			{
+				printf("%d ",q[i][j]);
+			}
+			printf("\n");
+		}*/
 	}
 	cout<<"\nPress any key to continue to main menu."<<endl;
 	char contl;

@@ -77,7 +77,19 @@ int menu()
 		}
 		case 4:
 		{
-			
+			cout<<"Enter the value before which you want to enter new node:"<<endl;
+			int key;
+			cin>>key;
+			head = insertBefore(head,key);
+			if(head == NULL)
+			{
+				menu();
+			}
+			else
+			{
+				display(head);
+				menu();
+			}
 			break;
 		}
 		case 5:
@@ -117,7 +129,7 @@ struct node *newNode(struct node *head)
 {
 	Node *newnode, *ptr;
 	newnode = (struct node*)malloc(sizeof(Node));
-	printf("Enter the data to be inserted:");
+	printf("Enter the data to be inserted:\n");
 	int data;
 	scanf("%d",&data);
 	newnode->val = data;
@@ -209,6 +221,46 @@ struct node *insertAfter(struct node *head,int k)
 		n1 = newNode(head);
 		n1->next = ptr->next;
 		ptr->next = n1;
+		return head;
+	}
+}
+
+struct node *insertBefore(struct node *head,int k)
+{
+	if(head==NULL)
+	{
+		cout<<"\nThe list is empty. Do you want to add at beginnig?"<<endl;
+		cout<<"Press y for yes"<<endl;
+		char confirm;
+		cin>>confirm;
+		if(confirm=='y'||confirm=='Y')
+		{
+			head = newNode(head);
+			head->next = NULL;
+			return head;
+		}
+		else
+		{
+			cout<<"You didn't press Yes. Going to main menu"<<endl;
+			getch();
+			return NULL;
+		}
+	}
+	else
+	{
+		Node *ptr,*n1,*pred;
+		ptr = head;
+		while((ptr->next!=NULL)&&(ptr->val!=k))
+		{
+			pred = ptr;
+			ptr = ptr->next;
+		}
+		n1 = newNode(head);
+		/*n1->next = ptr->next;
+		ptr->next = n1;
+		return head;*/
+		n1->next = pred->next;
+		pred->next = n1;
 		return head;
 	}
 }

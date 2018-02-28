@@ -112,7 +112,16 @@ int menu()
 		}
 		case 6:
 		{
-			
+			head = deleteAtEnd(head);
+			if(head==NULL)
+			{
+				menu();
+			}
+			else
+			{
+				display(head);
+				menu();
+			}
 			break;
 		}
 		case 7:
@@ -362,6 +371,43 @@ struct node *deleteAtBeg(struct node *head)
 		return head;
 	}
 }
+
+struct node *deleteAtEnd(struct node *head)
+{
+	if(head==NULL)
+	{
+		cout<<"Oops! Already Empty!\nPress Enter for main menu.";
+		getch();
+		return NULL;
+	}
+	else
+	{
+		/*Node *ptr;
+		ptr = head;
+		head = ptr->next;
+		free(ptr);*/
+		Node *ptr,*pred=NULL;
+		ptr = head;
+		if(head->next==NULL)
+		{
+			system("cls");
+			printf("------------------------------------\n");
+			printf("NULL");
+			printf("\n------------------------------------\n");
+			getch();
+			return NULL;
+		}
+		while(ptr->next!=NULL)
+		{
+			pred = ptr;
+			ptr = ptr->next;
+		}
+		pred->next=NULL;
+		free(ptr);
+		return head;
+	}
+}
+
 
 void display(struct node *head)
 {

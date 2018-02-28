@@ -53,7 +53,9 @@ int menu()
 		}
 		case 2:
 		{
-			
+			head = insertAtEnd(head);
+			display(head);
+			menu();
 			break;
 		}
 		case 3:
@@ -135,6 +137,30 @@ struct node *insertAtBeg(struct node *head)
 		n1 = newNode(head);
 		n1->next = head;
 		head = n1;
+		return head;
+	}
+}
+
+struct node *insertAtEnd(struct node *head)
+{
+	if(head==NULL)
+	{
+		head = newNode(head);
+		head->next = NULL;
+		return head;
+	}
+	else
+	{
+		Node *ptr,*n1;
+		ptr = head;
+		while(ptr->next!=NULL)
+		{
+			ptr = ptr->next;
+		}
+		n1 = newNode(head);
+		ptr->next = n1;
+		ptr = n1;
+		n1->next = NULL;
 		return head;
 	}
 }

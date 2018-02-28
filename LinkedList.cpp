@@ -60,7 +60,19 @@ int menu()
 		}
 		case 3:
 		{
-			
+			cout<<"Enter the value after which you want to enter new node:"<<endl;
+			int key;
+			cin>>key;
+			head = insertAfter(head,key);
+			if(head == NULL)
+			{
+				menu();
+			}
+			else
+			{
+				display(head);
+				menu();
+			}
 			break;
 		}
 		case 4:
@@ -165,6 +177,42 @@ struct node *insertAtEnd(struct node *head)
 	}
 }
 
+struct node *insertAfter(struct node *head,int k)
+{
+	if(head==NULL)
+	{
+		cout<<"\nThe list is empty. Do you want to add at beginnig?"<<endl;
+		cout<<"Press y for yes"<<endl;
+		char confirm;
+		cin>>confirm;
+		if(confirm=='y'||confirm=='Y')
+		{
+			head = newNode(head);
+			head->next = NULL;
+			return head;
+		}
+		else
+		{
+			cout<<"You pressed No. Going to main menu"<<endl;
+			getch();
+			return NULL;
+		}
+	}
+	else
+	{
+		Node *ptr,*n1;
+		ptr = head;
+		while((ptr->next!=NULL)&&(ptr->val!=k))
+		{
+			ptr = ptr->next;
+		}
+		n1 = newNode(head);
+		n1->next = ptr->next;
+		ptr->next = n1;
+		return head;
+	}
+}
+
 void display(struct node *head)
 {
 	system("cls");
@@ -182,11 +230,11 @@ void display(struct node *head)
 	getch();
 }
 
+/*TODO
 
+*Multiple search results in Before and After functions
 
-
-
-
+*/
 
 	/*Node *n1,*n2,*n3,*n4,*ptr;
 	n1 = newNode(head);

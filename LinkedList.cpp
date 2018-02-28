@@ -19,7 +19,7 @@ void display(struct node*);
 struct node *newNode(struct node*);
 struct node *insertAtBeg(struct node*); 
 struct node *insertAtEnd(struct node*); 
-struct node *insertAfter(struct node*,int); 
+struct node *insertAfter(struct node*); 
 struct node *insertBefore(struct node*,int); 
 struct node *deleteAtBeg(struct node*); 
 struct node *deleteAtEnd(struct node*); 
@@ -60,16 +60,20 @@ int menu()
 		}
 		case 3:
 		{
-			cout<<"Enter the value after which you want to enter new node:"<<endl;
-			int key;
-			cin>>key;
-			head = insertAfter(head,key);
-			if(head == NULL)
+			Node *temp1;
+			temp1 = insertAfter(head);
+			if(temp1 == NULL)
 			{
+				while(temp1 == NULL)
+					temp1 = insertAfter(head);
+				head = temp1;
+				display(head);
 				menu();
 			}
 			else
 			{
+				printf("5");
+				head = temp1;
 				display(head);
 				menu();
 			}
@@ -94,7 +98,16 @@ int menu()
 		}
 		case 5:
 		{
-			
+			head = deleteAtBeg(head);
+			if(head==NULL)
+			{
+				menu();
+			}
+			else
+			{
+				display(head);
+				menu();
+			}
 			break;
 		}
 		case 6:
@@ -189,11 +202,14 @@ struct node *insertAtEnd(struct node *head)
 	}
 }
 
-struct node *insertAfter(struct node *head,int k)
+struct node *insertAfter(struct node *head)
 {
+	cout<<"Enter the value after which you want to enter new node:"<<endl;
+	int k;
+	cin>>k;
 	if(head==NULL)
 	{
-		cout<<"\nThe list is empty. Do you want to add at beginnig?"<<endl;
+		cout<<"\nThe list is empty. Do you want to add at beginning?"<<endl;
 		cout<<"Press y for yes"<<endl;
 		char confirm;
 		cin>>confirm;
@@ -203,25 +219,76 @@ struct node *insertAfter(struct node *head,int k)
 			head->next = NULL;
 			return head;
 		}
-		else
+		/*else
 		{
 			cout<<"You pressed No. Going to main menu"<<endl;
 			getch();
 			return NULL;
-		}
+		}*/
 	}
 	else
 	{
-		Node *ptr,*n1;
+		int flag = 0,foundflag=0;
+		Node *ptr=NULL,*n1,*pred=NULL;
 		ptr = head;
-		while((ptr->next!=NULL)&&(ptr->val!=k))
+		while((ptr!=NULL)&&(ptr->val!=k))
 		{
+			if(ptr->val==k)
+			{
+				foundflag=1;
+			}
+			flag = 1;
+			pred = ptr;
 			ptr = ptr->next;
 		}
-		n1 = newNode(head);
-		n1->next = ptr->next;
-		ptr->next = n1;
-		return head;
+		if(pred==NULL)
+		{
+			if(ptr->val==k)
+			{
+				
+			}
+			else
+			{
+				system("cls");
+				cout<<"Search not found"<<endl;
+				cout<<"1.Change your search\n2.MainMenu"<<endl;
+				int c1;
+				cin>>c1;
+				if(c1==1)
+				{
+					return NULL;
+				}
+				else
+				{
+					cout<<"Press Enter to go to main menu."<<endl;
+					return head;
+				}	
+			}
+		}
+		if(ptr==NULL&&flag==1&&foundflag!=1)
+		{
+			system("cls");
+			cout<<"Search not found"<<endl;
+			cout<<"1.Change your search\n2.MainMenu"<<endl;
+			int c1;
+			cin>>c1;
+			if(c1==1)
+			{
+				return NULL;
+			}
+			else
+			{
+				cout<<"Press Enter to go to main menu."<<endl;
+				return head;
+			}
+		}
+		else
+		{
+			n1 = newNode(head);
+			n1->next = ptr->next;
+			ptr->next = n1;
+			return head;
+		}
 	}
 }
 
@@ -246,6 +313,11 @@ struct node *insertBefore(struct node *head,int k)
 			return NULL;
 		}
 	}
+	else if(k==head->val)
+	{
+		head = insertAtBeg(head);
+		return head;
+	}
 	else
 	{
 		Node *ptr,*n1,*pred;
@@ -261,6 +333,32 @@ struct node *insertBefore(struct node *head,int k)
 		return head;*/
 		n1->next = pred->next;
 		pred->next = n1;
+		return head;
+	}
+}
+
+struct node *deleteAtBeg(struct node *head)
+{
+	if(head==NULL)
+	{
+		cout<<"Oops! Already Empty!\nPress Enter for main menu.";
+		getch();
+		return NULL;
+	}
+	else
+	{
+		Node *ptr;
+		ptr = head;
+		head = ptr->next;
+		free(ptr);
+		if(head==NULL)
+		{
+			system("cls");
+			printf("------------------------------------\n");
+			printf("NULL");
+			printf("\n------------------------------------\n");
+			getch();
+		}
 		return head;
 	}
 }
@@ -285,6 +383,9 @@ void display(struct node *head)
 /*TODO
 
 *Multiple search results in Before and After functions
+*Before BUG
+*Search not found?
+*Display when List is NULL(Fixed)
 
 */
 

@@ -10,17 +10,21 @@ struct node
 	struct node *next;	
 };
 
+struct node *head = NULL;
+
+struct node *newLL(struct node*); 
+struct node *display(struct node*); 
+struct node *insertAtBeg(struct node*); 
+struct node *insertAtEnd(struct node*); 
+struct node *insertAfter(struct node*,int); 
+struct node *insertBefore(struct node*,int); 
+struct node *deleteAtBeg(struct node*); 
+struct node *deleteAtEnd(struct node*); 
+struct node *deleteAfter(struct node*,int); 
+struct node *deleteBefore(struct node*,int); 
+
+
 int main()
 {
-	struct node *newnode,*head;
-	newnode = (struct node*)malloc(sizeof(node)); 
-	head = newnode;
-	newnode->val = 5;
-	printf("%d",head->val);
-	struct node *newnode1;
-	newnode1 = (struct node*)malloc(sizeof(node));
-	newnode1->val = 4;
-	head->next = newnode1;
-	printf("%d",head->next->val);
-	printf("%d",newnode1->val);
+	
 }

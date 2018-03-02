@@ -11,7 +11,7 @@ typedef struct node
 	struct node *next;	
 }Node;
 
-
+int nullflag=0;
 struct node *head = NULL;
 //All the function definitions
 int menu();
@@ -36,12 +36,13 @@ int main()
 int menu()
 {
 	system("cls");
+	fflush(stdin);
 	printf("Select your operation\n");
 	printf("1.Insertion at beginning\n2.Insertion at end\n3.Insertion after a value\n");
 	printf("4.Insertion before a value\n5.Deletion at beginning\n6.Deletion at end\n");
 	printf("7.Deletion after a value\n8.Deletion at a value\n9.Exit\n");
-	int choice;
-	cin>>choice;
+	int choice=0;
+	scanf("%d",&choice);
 	switch(choice)
 	{
 		case 1:
@@ -172,7 +173,10 @@ int menu()
 				if(temp1 == NULL)
 				{
 					while(temp1 == NULL)
-						temp1 = deleteAt(head);
+					{
+						printf("Bye");
+						temp1 = deleteAt(head);	
+					}
 					head = temp1;
 					display(head);
 					menu();
@@ -193,7 +197,8 @@ int menu()
 		}
 		default:
 		{
-			cout<<"/nEnter from the given choices\n"<<endl;
+			cout<<"\nEnter from the given choices"<<endl;
+			getch();
 			menu();		
 		}
 	}	
@@ -471,6 +476,7 @@ struct node *deleteAtBeg(struct node *head)
 		free(ptr);
 		if(head==NULL)
 		{
+			printf("Hello");
 			system("cls");
 			printf("\n\n------------------------------------\n");
 			printf("NULL");
@@ -628,9 +634,7 @@ struct node *deleteAt(struct node *head)
 		while((ptr!=NULL)&&(ptr->val!=k))
 		{
 			if(ptr->val==k)
-			{
 				foundflag=1;
-			}
 			flag = 1;
 			pred = ptr;
 			ptr = ptr->next;
@@ -639,7 +643,17 @@ struct node *deleteAt(struct node *head)
 		{
 			if(ptr->val==k)
 			{
-				
+				//printf("Hi");
+				//nullflag = 1;
+				if(ptr->next==NULL)
+				{
+					printf("Hi");
+					getch();
+					head = deleteAtBeg(head);
+					return head;
+				}
+				head = deleteAtBeg(head);
+				return head;
 			}
 			else
 			{
@@ -684,6 +698,9 @@ struct node *deleteAt(struct node *head)
 			free(ptr);
 			if(head==NULL)
 				{
+					//nullflag=1;
+					/*printf("Good");
+					getch();*/
 					system("cls");
 					printf("\n\n------------------------------------\n");
 					printf("NULL");
@@ -710,28 +727,3 @@ void display(struct node *head)
 	printf("------------------------------------\n");
 	getch();
 }
-
-/*TODO
-
-*Multiple search results in Before and After functions
-*Before BUG
-*Search not found?
-*Display when List is NULL(Fixed)
-
-*/
-
-	/*Node *n1,*n2,*n3,*n4,*ptr;
-	n1 = newNode(head);
-	head = n1;
-	ptr = head;
-	n2 = newNode(head);
-	//ptr->next = n2;
-	n1->next = n2;
-	//display(head);
-	n3 = newNode(head);
-	//ptr->next->next = NULL;
-	n2->next = n3;
-	n3->next = NULL;
-	display(head);
-	return ptr->next->val;
-	//cout<<ptr->next->next;*/

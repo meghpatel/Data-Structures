@@ -24,6 +24,7 @@ int main()
 void menu()
 {
 	system("cls");
+	fflush(stdin);
 	printf("Select your operation\n");
 	printf("1.Insert\n");
 	printf("2.Delete\n");
@@ -49,7 +50,8 @@ void menu()
 		}
 		case 3:
 		{
-			
+			display(head);
+			menu();
 			break;
 		}
 		case 4:
@@ -59,7 +61,9 @@ void menu()
 		}
 		default:
 		{
-					
+			printf("Enter from given choices only\nPress Enter to go to menu\n");
+			getch();
+			menu();	
 		}
 	}	
 }
@@ -68,7 +72,7 @@ struct node *newNode(struct node *head)
 {
 	Node *newnode, *ptr;
 	newnode = (struct node*)malloc(sizeof(struct node));
-	printf("Enter the data to be inserted:\n");
+	printf("\n\n\nEnter the data to be inserted:\n");
 	int data;
 	scanf("%d",&data);
 	newnode->val = data;
@@ -93,6 +97,7 @@ struct node *insertLL(struct node *head)
 	printf("2.End\n");
 	printf("3.After a value\n");
 	printf("4.Before a value\n");
+	printf("5.Exit to menu\n");
 	int sel;
 	scanf("%d",&sel);
 	if(head==NULL)
@@ -132,44 +137,44 @@ struct node *insertLL(struct node *head)
 	}
 	else if(sel == 3)
 	{
-		printf("Enter the value after which you want to INSERT a Node\n");
+		printf("\n\n\nEnter the value after which you want to INSERT a Node\n");
 		int search,flag = 0;
 		scanf("%d",&search);
 		Node *ptr,*n1;
 		ptr = head;
-		if(ptr->next == head)
+		if(ptr->next == head)//if only one node
 		{
-			if(ptr->val == search)
+			if(ptr->val == search)//if the only node same as the query
 			{
 				n1 = newNode(head);
 				ptr->next = n1;
 				n1->next = head;
 				return head;		
 			}
-			else
+			else//not found
 			{
-				printf("\n\n\n\nSEARCH VALUE NOT FOUND\n");
+				printf("\n\n\n\nSEARCH VALUE NOT FOUND\nPress Enter\n");
 				getch();
 				return head;	
 			}
 		}
 		else
 		{
-			while(ptr->next!=head&&ptr->val!=search)
+			while(ptr->next!=head&&ptr->val!=search)//traversing
 			{
 				ptr = ptr->next;	
 			}
-			if(ptr->val == search)
+			if(ptr->val == search)//double check
 			{
 				flag = 1;
 			}
-			if(flag == 0)
+			if(flag == 0)//not found
 			{
-				printf("\n\n\n\nSEARCH VALUE NOT FOUND\n");
+				printf("\n\n\n\nSEARCH VALUE NOT FOUND\nPress Enter\n");
 				getch();
 				return head;
-			}
-			else if(flag == 1)
+			}//found
+			else if(flag == 1)//adding a node
 			{
 				n1 = newNode(head);
 				n1->next = ptr->next;
@@ -177,6 +182,66 @@ struct node *insertLL(struct node *head)
 				return head;
 			}
 		}
+	}
+	else if(sel == 4)
+	{
+		printf("\n\n\nEnter the value before which you want to INSERT a Node\n");
+		int search,flag = 0;
+		scanf("%d",&search);
+		Node *ptr,*n1,*pred=NULL;
+		ptr = head;
+		if(ptr->next == head)//if only one node
+		{
+			if(ptr->val == search)//is the node same as we are searching
+			{
+				n1 = newNode(head);
+				n1->next = head;
+				ptr->next = n1;
+				head = n1;
+				return head;		
+			}
+			else//Node not found
+			{
+				printf("\n\n\n\nSEARCH VALUE NOT FOUND\nPress Enter\n");
+				getch();
+				return head;	
+			}
+		}
+		else//searching in multiple nodes
+		{
+			while(ptr->next!=head&&ptr->val!=search)//traversing 
+			{
+				pred = ptr;
+				ptr = ptr->next;	
+			}
+			if(ptr->val == search)//checking once again
+			{
+				flag = 1;
+			}
+			if(flag == 0)
+			{
+				printf("\n\n\n\nSEARCH VALUE NOT FOUND\nPress Enter\n");
+				getch();
+				return head;
+			}
+			else if(flag == 1)//found the result and adding the node
+			{
+				n1 = newNode(head);
+				n1->next = pred->next;
+				pred->next = n1;
+				return head;
+			}
+		}
+	}
+	else if(sel == 5)
+	{
+		return head;
+	}
+	else
+	{
+		printf("Enter proper value.\nPress Enter to go back to main menu\n");
+		getch();
+		return head;
 	}
 }
 
@@ -189,11 +254,12 @@ struct node *deleteLL(struct node *head)
 	printf("2.End\n");
 	printf("3.After a value\n");
 	printf("4.At a value\n");
+	printf("5.Exit to main Menu\n");
 	int sel;
 	scanf("%d",&sel);
 	if(head==NULL)
 	{
-		printf("Oops! The linked list is already empty\n");
+		printf("Oops! The linked list is already empty\nPress Enter\n");
 		getch();
 		return NULL;
 	}
@@ -201,15 +267,15 @@ struct node *deleteLL(struct node *head)
 	{
 		Node *n1,*ptr,*temp;
 		ptr = head;
-		if(ptr->next == head)
+		if(ptr->next == head)//if only one node
 		{
 			free(head);
 			return NULL;
 		}
-		else
+		else//multiple nodes
 		{
 			temp = head;
-			while(ptr->next!=head)
+			while(ptr->next!=head)//traversing
 			{
 				ptr = ptr->next;
 			}
@@ -223,14 +289,14 @@ struct node *deleteLL(struct node *head)
 	{
 		Node *n1,*ptr,*pred=NULL;
 		ptr = head;
-		if(ptr->next == head)
+		if(ptr->next == head)//if only one node
 		{
-			free(head);
+			free(ptr);
 			return NULL;
 		}
-		else
+		else//multiple nodes
 		{
-			while(ptr->next!=head)
+			while(ptr->next!=head)//traversing
 			{
 				pred = ptr;
 				ptr = ptr->next;
@@ -242,7 +308,131 @@ struct node *deleteLL(struct node *head)
 	}
 	else if(sel == 3)
 	{
-		
+		printf("\n\n\nEnter the value after which you want to DELETE a Node\n\n\n");
+		int search,flag = 0;
+		scanf("%d",&search);
+		Node *ptr,*n1,*temp;
+		ptr = head;
+		if(ptr->next == head)//if only one node
+		{
+			if(ptr->val == search)//if the only node same as the query
+			{
+				free(ptr);
+				return NULL;		
+			}
+			else//not found
+			{
+				printf("\n\n\n\nSEARCH VALUE NOT FOUND\nPress Enter\n");
+				getch();
+				return head;	
+			}
+		}
+		else
+		{
+			while(ptr->next!=head&&ptr->val!=search)//traversing
+			{
+				ptr = ptr->next;	
+			}
+			if(ptr->val == search)//double check
+			{			
+				flag = 1;
+			}
+			if(flag == 0)//not found
+			{
+				printf("\n\n\n\nSEARCH VALUE NOT FOUND\nPress Enter\n");
+				getch();
+				return head;
+			}//found
+			else if(flag == 1)//deleting a node
+			{
+				if(ptr->next == head)//if search node is last then after last first node is deleted
+				{
+					temp = head;
+					ptr->next = temp->next;
+					head = temp->next;
+					free(temp);
+					return head;
+				}
+				else//search result not a last element
+				{
+					temp = ptr->next;
+					ptr->next = temp->next;
+					free(temp);
+					return head;
+				}
+			}
+		}
+	}
+	else if(sel == 4)
+	{
+		printf("\n\n\nEnter the value which you want to DELETE a Node\n\n\n");
+		int search,flag = 0;
+		scanf("%d",&search);
+		Node *ptr,*n1,*temp,*pred=NULL;
+		ptr = head;
+		if(ptr->next == head)//if only one node
+		{
+			if(ptr->val == search)//if the only node same as the query
+			{
+				free(ptr);
+				return NULL;		
+			}
+			else//not found
+			{
+				printf("\n\n\n\nSEARCH VALUE NOT FOUND\nPress Enter\n");
+				getch();
+				return head;	
+			}
+		}
+		else
+		{
+			while(ptr->next!=head&&ptr->val!=search)//traversing
+			{
+				pred = ptr;
+				ptr = ptr->next;	
+			}
+			if(ptr->val == search)//double check
+			{		
+				flag = 1;
+			}
+			if(flag == 0)//not found
+			{
+				printf("\n\n\n\nSEARCH VALUE NOT FOUND\nPress Enter\n");
+				getch();
+				return head;
+			}//found
+			else if(flag == 1)//removing a node
+			{
+				if(ptr == head)//if the searched node is first
+				{
+					Node *temp = head;
+					while(temp->next!=head)
+					{
+						temp = temp->next;
+					}
+					head = ptr->next;
+					temp->next = head;
+					free(ptr);
+					return head;
+				}
+				else//search result not a last element
+				{				
+					pred->next = ptr->next;
+					free(ptr);
+					return head;
+				}
+			}
+		}
+	}
+	else if(sel == 5)
+	{
+		return head;
+	}
+	else
+	{
+		printf("Enter proper value.\nPress Enter to go back to main menu\n");
+		getch();
+		return head;
 	}
 }
 

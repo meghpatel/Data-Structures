@@ -133,7 +133,7 @@ struct node *insertLL(struct node *head)
 	else if(sel == 3)
 	{
 		printf("Enter the value after which you want to INSERT a Node\n");
-		int search;
+		int search,flag = 0;
 		scanf("%d",&search);
 		Node *ptr,*n1;
 		ptr = head;
@@ -155,12 +155,27 @@ struct node *insertLL(struct node *head)
 		}
 		else
 		{
-			while(ptr!=NULL&&ptr->val!=search)
+			while(ptr->next!=head&&ptr->val!=search)
 			{
 				ptr = ptr->next;	
 			}
-			n1 = newNode(head);
-			n1->next = 
+			if(ptr->val == search)
+			{
+				flag = 1;
+			}
+			if(flag == 0)
+			{
+				printf("\n\n\n\nSEARCH VALUE NOT FOUND\n");
+				getch();
+				return head;
+			}
+			else if(flag == 1)
+			{
+				n1 = newNode(head);
+				n1->next = ptr->next;
+				ptr->next = n1;
+				return head;
+			}
 		}
 	}
 }

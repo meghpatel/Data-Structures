@@ -21,7 +21,7 @@ Node *ptr123 = NULL;
 //declaring functions
 struct node *newTerm(struct node*);
 struct node *insertAndSort(struct node*);
-struct node *AddPoly(struct node*,struct node*);
+struct node *AddPoly(struct node*,struct node*,struct node*);
 void display(struct node*);
 
 int main()
@@ -41,13 +41,14 @@ int main()
     for(int i=0;i<n2;i++)
     {
         head2 = insertAndSort(head2);
+        display(head2);
     }
     display(head1);
     cout<<"\n\nLIST 2\n"<<endl;
     display(head2);
 
 	cout<<"The added polynomial is :-"<<endl;
-	head3 = AddPoly(head1,head2);
+	head3 = AddPoly(head1,head2,head3);
 	display(head3);
 }
 
@@ -80,26 +81,11 @@ struct node *insertAndSort(struct node *head)
 		head->next = NULL;
 		return head;
 	}
-	/*else
-	{
-		Node *ptr,*n1;
-		ptr = head;
-		while(ptr->next!=NULL)
-		{
-			ptr = ptr->next;
-		}
-		n1 = newTerm(head);
-		ptr->next = n1;
-		ptr = n1;
-		n1->next = NULL;
-		return head;
-	}*/
 	else
 	{
 		Node *temp, *ptr, *previous;
 		temp = head;
 		ptr = newTerm(head);
-		printf("temp= %d pow =%d\n",temp->pow,power);
 		if(power>temp->pow)
 		{
 			head = ptr;
@@ -132,12 +118,14 @@ struct node *insertAndSort(struct node *head)
 	}
 }
 
-struct node* AddPoly(struct node* head1,struct node* head2)
+struct node* AddPoly(struct node* head1,struct node* head2,struct node* head3)
 {
-	Node *temp1, *temp2, *newnode, *head3, *temp3;
+	Node *temp1, *temp2, *newnode, *temp3;
 	temp1 = head1;
 	temp2 = head2;
-	while(temp1->next!=NULL&&temp2->next!=NULL)
+	temp3 = head3;
+	int i=0;
+	while(temp1!=NULL&&temp2!=NULL)
 	{
 		if(temp1->pow==temp2->pow)
 		{
@@ -145,16 +133,78 @@ struct node* AddPoly(struct node* head1,struct node* head2)
 			{
 				newnode = (struct node*)malloc(sizeof(struct node));
 				head3 = newnode;
+				newnode->pow = temp1->pow;
+				newnode->coeff = temp1->coeff + temp2->coeff;
 				newnode->next = NULL;
+				temp3 = newnode;
 			}
 			else
 			{
 				newnode = (struct node*)malloc(sizeof(struct node));
 				newnode->next = NULL;
+				newnode->pow = temp1->pow;
+				newnode->coeff = temp1->coeff + temp2->coeff;
 				temp3->next = newnode;
 				temp3 = temp3->next;
 			}
+			temp1 = temp1->next;
+			temp2 = temp2->next;
 		}
+		else
+		{
+			if(temp1->pow>temp2->pow)
+			{
+				newnode = (struct node*)malloc(sizeof(struct node));
+				if(head3==NULL)
+				{
+					head3 = newnode;
+					temp3 = head3;
+				}
+				newnode->next = NULL;
+				newnode->pow = temp1->pow;
+				newnode->coeff = temp1->coeff;
+				temp3->next = newnode;
+				temp3 = temp3->next;
+				temp1 = temp1->next;				
+			}
+			else
+			{
+				newnode = (struct node*)malloc(sizeof(struct node));
+				if(head3==NULL)
+				{
+					head3 = newnode;
+					temp3 = head3;
+				}
+				newnode->next = NULL;
+				newnode->pow = temp2->pow;
+				newnode->coeff = temp2->coeff;
+				temp3->next = newnode;
+				temp3 = temp3->next;
+				temp2 = temp2->next;
+			}
+		}
+	}
+	
+	while(temp1!=NULL)
+	{
+		newnode = (struct node*)malloc(sizeof(struct node));
+		newnode->next = NULL;
+		newnode->pow = temp1->pow;
+		newnode->coeff = temp1->coeff;
+		temp3->next = newnode;
+		temp3 = temp3->next;
+		temp1 = temp1->next;
+	}
+	
+	while(temp2!=NULL)
+	{
+		newnode = (struct node*)malloc(sizeof(struct node));
+		newnode->next = NULL;
+		newnode->pow = temp2->pow;
+		newnode->coeff = temp2->coeff;
+		temp3->next = newnode;
+		temp3 = temp3->next;
+		temp2 = temp2->next;
 	}
 	return head3;
 }
@@ -165,12 +215,12 @@ void display(struct node *head)
 	Node *ptr;
 	ptr = head;
 	printf("\n\n");
-	printf("------------------------------------\n");
+	printf("------------------------------------------------------------------------------------------------------\n");
 	while(ptr->next!=NULL)
 	{
 		printf("|%d %d| --> ",ptr->coeff,ptr->pow);
 		ptr = ptr->next;
 	}
 	printf("|%d %d| --> NULL \n",ptr->coeff,ptr->pow);
-	printf("------------------------------------\n");
+	printf("-------------------------------------------------------------------------------------------------------\n");
 }

@@ -1,7 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<iostream>
-#include<conio.h>
 
 using namespace std;
 
@@ -22,6 +21,7 @@ Node *ptr123 = NULL;
 //declaring functions
 struct node *newTerm(struct node*);
 struct node *insertAndSort(struct node*);
+struct node *AddPoly(struct node*,struct node*);
 void display(struct node*);
 
 int main()
@@ -44,7 +44,11 @@ int main()
     }
     display(head1);
     cout<<"\n\nLIST 2\n"<<endl;
-    display(head2);	
+    display(head2);
+
+	cout<<"The added polynomial is :-"<<endl;
+	head3 = AddPoly(head1,head2);
+	display(head3);
 }
 
 struct node *newTerm(struct node *head)
@@ -96,68 +100,63 @@ struct node *insertAndSort(struct node *head)
 		temp = head;
 		ptr = newTerm(head);
 		printf("temp= %d pow =%d\n",temp->pow,power);
-		printf("why isn't it going into the loop?");
-		if(head->next==NULL)
+		if(power>temp->pow)
 		{
-			printf("It should come here only once\n");
-			flag = 1;
-			if(power>head->pow)
-			{
-				head = ptr;
-				head->next = temp;
-				temp->next = NULL;
-				return head;
-			}
-			else if(head->pow == power)
-			{
-				head->coeff = head->coeff + coefficient;
-				return head;
-			}
-			else
-			{
-				head->next = ptr;
-				ptr->next = NULL;
-				return head;
-			}
-		}
-		if(power>head->pow)
-		{
-			printf("\n\n\nPow>head\n\n");
 			head = ptr;
 			ptr->next = temp;
 			return head;
 		}
 		else
 		{
-			printf("\n\n\nELSE\n\n");
-			while((power<=temp->pow)&&(temp->next!=NULL))
+			do
 			{
-				printf("LOOP %d",i);
 				if(temp->pow == power)
-				{
-					temp->coeff = temp->coeff + coefficient;
-					flag = 1;
-					return head;
-				}
+	            {
+	                temp->coeff = temp->coeff + coefficient;
+	                flag = 1;
+	                return head;
+	            }
 				else
 				{
 					previous = temp;
-					temp = temp->next;	
+					temp = temp->next;
 				}
-				if(temp->next==NULL)
-				{
-					printf("NULL");
-				}
-				i++;
-			}
+			}while((temp!=NULL)&&(power<=temp->pow));
 			if(flag==0)
 			{
-				ptr->next = temp->next;
-				temp->next = ptr;
-				return head;
+				ptr->next = previous->next;
+	            previous->next = ptr;
+	            return head;
 			}
 		}
 	}
+}
+
+struct node* AddPoly(struct node* head1,struct node* head2)
+{
+	Node *temp1, *temp2, *newnode, *head3, *temp3;
+	temp1 = head1;
+	temp2 = head2;
+	while(temp1->next!=NULL&&temp2->next!=NULL)
+	{
+		if(temp1->pow==temp2->pow)
+		{
+			if(head3==NULL)
+			{
+				newnode = (struct node*)malloc(sizeof(struct node));
+				head3 = newnode;
+				newnode->next = NULL;
+			}
+			else
+			{
+				newnode = (struct node*)malloc(sizeof(struct node));
+				newnode->next = NULL;
+				temp3->next = newnode;
+				temp3 = temp3->next;
+			}
+		}
+	}
+	return head3;
 }
 
 void display(struct node *head)
@@ -174,5 +173,4 @@ void display(struct node *head)
 	}
 	printf("|%d %d| --> NULL \n",ptr->coeff,ptr->pow);
 	printf("------------------------------------\n");
-	getche();
 }

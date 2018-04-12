@@ -43,6 +43,7 @@ int main()
         head2 = insertAndSort(head2);
         display(head2);
     }
+    cout<<"\n\nLIST 1\n"<<endl;
     display(head1);
     cout<<"\n\nLIST 2\n"<<endl;
     display(head2);
@@ -215,12 +216,12 @@ void display(struct node *head)
 	Node *ptr;
 	ptr = head;
 	printf("\n\n");
-	printf("------------------------------------------------------------------------------------------------------\n");
+	printf("----------------------------------------------------------------------------------\n");
 	while(ptr->next!=NULL)
 	{
 		printf("|%d %d| --> ",ptr->coeff,ptr->pow);
 		ptr = ptr->next;
 	}
 	printf("|%d %d| --> NULL \n",ptr->coeff,ptr->pow);
-	printf("-------------------------------------------------------------------------------------------------------\n");
+	printf("----------------------------------------------------------------------------------\n");
 }

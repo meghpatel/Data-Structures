@@ -17,7 +17,7 @@ Node *root = NULL;
 void menu();
 struct node *newNode(int);
 struct node *insertNode(struct node*,int);
-struct node *deleteNode(struct node*);
+struct node *deleteNode(struct node*,int);
 void display();
 void preorder(struct node*);
 void inorder(struct node*);
@@ -52,7 +52,10 @@ void menu()
 		}
 		case 2:
 		{
-			
+			printf("\n\n\nEnter the data to be deleted:\n");
+			int data;
+			scanf("%d",&data);
+			root = deleteNode(root,data);
 			menu();
 			break;
 		}
@@ -101,6 +104,49 @@ struct node *insertNode(struct node* root,int data)
 	else
 	{
 		root->right = insertNode(root->right,data);
+	}
+	
+	return root;
+}
+
+struct node *deleteNode(struct node* root,int data)
+{
+	Node *ptr;
+	if(root==NULL)
+	{
+		return root;
+	}
+	
+	if(data<root->val)
+	{
+		root->left = deleteNode(root->left,data);
+	}
+	else if(data>root->val)
+	{
+		root->right = deleteNode(root->right,data);
+	}
+	else
+	{
+		if(root->left==NULL)
+		{
+			struct node *temp = root->right;
+            free(root);
+            return temp;
+		}
+		else if (root->right == NULL)
+        {
+            Node *temp = root->left;
+            free(root);
+            return temp;
+        }
+        
+        while(ptr->left!=NULL)
+		{
+			ptr = ptr->left;
+		}
+		
+		root->val = ptr->val;
+		root->right = deleteNode(root->right, ptr->val);
 	}
 	
 	return root;
